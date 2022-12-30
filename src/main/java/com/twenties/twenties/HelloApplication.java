@@ -18,7 +18,6 @@ import java.io.IOException;
 import javafx.util.Duration;
 
 public class HelloApplication extends Application {
-
     MainTimer mainTimer;
     MainWindow mainWindow;
     Label mainLabel;
@@ -27,18 +26,18 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Integer startTime = 120;
+        Integer startTime = 3;
         mainDuration = new Duration(0);
         mainTimeline = new Timeline();
         mainTimer = new MainTimer(startTime, mainDuration, mainTimeline);
         mainLabel = mainTimer.getLabel();
         mainTimeline = mainTimer.getTimeline();
-
         mainWindow = new MainWindow(stage);
         mainWindow.setButtonLabels();
-
         Stage mainStage = mainWindow.getStage();
+        mainTimer.styleLabel();
         StringBinding stringBinding = mainTimer.getFormattedTime();
+        // Bind the countdown time to the label
         mainLabel.textProperty().bind(stringBinding);
 
         // EFFECTS: starts MainTimer
@@ -52,7 +51,7 @@ public class HelloApplication extends Application {
                 mainTimer.getTimeSeconds().set(mainTimer.getStartTime());
                 // Establish the course of the timeline
                 mainTimeline.getKeyFrames().add(
-                        new KeyFrame(mainDuration.seconds(mainTimer.getStartTime()+1),
+                        new KeyFrame(mainDuration.seconds(mainTimer.getStartTime() + 1),
                                 new KeyValue(mainTimer.getTimeSeconds(), 0)
                         ));
                 // Bind the time in MIN:SEC format to the timer label
@@ -60,7 +59,13 @@ public class HelloApplication extends Application {
                     mainTimer.getTimeSeconds().set(mainTimer.getTimeSeconds().get() - 1);
                 }));
                 mainTimeline.playFromStart();
+                // Close break notification window once it's timer is complete
+                mainTimeline.setOnFinished(event1 -> {
+                    BreakNotification bn = new BreakNotification(mainWindow.getStartButton());
+                    bn.setScreenCoordinates();
+                });
             }});
+
 
         // EFFECTS: pauses timeline in main window
         mainWindow.getPauseButton().setOnAction(new EventHandler<ActionEvent>() {
@@ -83,7 +88,6 @@ public class HelloApplication extends Application {
         Group group = mainWindow.getGroup();
         Scene scene = mainWindow.getScene();
 
-        mainTimer.styleLabel();
         vbox.getChildren().addAll(mainLabel);
         vbox.getChildren().add(hbox);
         group.getChildren().add(vbox);
