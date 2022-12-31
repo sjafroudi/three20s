@@ -13,7 +13,6 @@ public class MainWindow {
     Stage stage;
     Scene scene;
     Group group;
-//    Label label;
 
     Button startButton;
     Button pauseButton;
@@ -25,7 +24,6 @@ public class MainWindow {
     public MainWindow(Stage stage) {
         this.stage = stage;
         group = new Group();
-//        stage = new Stage();
         scene = new Scene(group, 400, 250);
         this.startButton = new Button();
         this.pauseButton = new Button();
@@ -50,7 +48,6 @@ public class MainWindow {
     }
 
     public void setButtonLabels() {
-
         startButton.setText("Start Timer");
         pauseButton.setText("Pause");
         resumeButton.setText("Resume");
@@ -60,20 +57,19 @@ public class MainWindow {
         hbox = new HBox();
         hbox.setSpacing(20);
         hbox.setAlignment(Pos.CENTER);
-
         hbox.getChildren().addAll(startButton,pauseButton,resumeButton);
-    }
-
-    public HBox getHbox() {
-        return hbox;
     }
 
     public void setVbox() {
         vbox = new VBox();
         vbox.setAlignment(Pos.CENTER);
         vbox.setPrefWidth(scene.getWidth());
-
     }
+
+    public HBox getHbox() {
+        return hbox;
+    }
+
     public VBox getVbox() {
         return vbox;
     }
@@ -82,13 +78,7 @@ public class MainWindow {
         stage.setTitle("20/20/20");
         setHbox();
         setVbox();
-//        group.getChildren().add(vbox);
         stage.setScene(scene);
         return stage;
     }
-
-
-
-
-
 }

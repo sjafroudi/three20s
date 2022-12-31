@@ -1,11 +1,7 @@
 package com.twenties.twenties;
-
 import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.binding.StringBinding;
-import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -15,17 +11,16 @@ import javafx.stage.StageStyle;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
-
 public class BreakNotification extends Stage {
     Stage breakStage;
     StackPane stackPane;
     Timeline countdown;
-    Label countdownLabel = new Label("2");
-
+    Label countdownLabel;
+    StringBinding sb;
 
     public BreakNotification(Button btn) {
         stackPane = new StackPane();
-        Scene scene = new Scene(stackPane, 120, 100);
+        Scene scene = new Scene(stackPane, 170, 120);
         breakStage = new Stage();
         breakStage.setTitle("BreakTime");
         breakStage.initStyle(StageStyle.UTILITY);
@@ -33,28 +28,22 @@ public class BreakNotification extends Stage {
 
         Duration dur = new Duration(0);
         Timeline tl = new Timeline();
-        BreakTimer breakTimer = new BreakTimer(2,dur,tl);
+        BreakTimer breakTimer = new BreakTimer(3,dur,tl, btn, breakStage);
 
-        Label label = breakTimer.getLabel();
-        breakTimer.styleLabel();
-        StringBinding stringBinding = breakTimer.getFormattedTime();
-        label.textProperty().bind(stringBinding);
 
-        this.countdown = new Timeline(
-                new KeyFrame(Duration.seconds(1), e -> {
-                    int count = Integer.parseInt(countdownLabel.getText());
-                    if (count > 0) {
-                        countdownLabel.setText(String.valueOf(count - 1));
-                        if (count == 1) {
-                            btn.fire();
-                        }
-                    } else {
-                        breakStage.close();
-                    }
-                })
-        );
+//        Label label = breakTimer.getLabel();
+//        breakTimer.styleLabel();
+//        StringBinding stringBinding = breakTimer.getFormattedTime();
+//        label.textProperty().bind(stringBinding);
+//        breakTimer.startBreakTimer();
 
-        countdown.setCycleCount(Animation.INDEFINITE);
+        countdown = breakTimer.getTimeline();
+        sb = breakTimer.getFormattedTime();
+        countdownLabel = breakTimer.getLabel();
+        countdownLabel.textProperty().bind(sb);
+//        breakTimer.setLabel();
+//        countdown.setCycleCount(Animation.INDEFINITE);
+//        countdown.play();
         countdown.play();
         stackPane.getChildren().add(countdownLabel);
         breakStage.setScene(scene);

@@ -25,7 +25,7 @@ public class HelloApplication extends Application {
     Timeline mainTimeline;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         Integer startTime = 3;
         mainDuration = new Duration(0);
         mainTimeline = new Timeline();
@@ -65,7 +65,6 @@ public class HelloApplication extends Application {
                     bn.setScreenCoordinates();
                 });
             }});
-
 
         // EFFECTS: pauses timeline in main window
         mainWindow.getPauseButton().setOnAction(new EventHandler<ActionEvent>() {

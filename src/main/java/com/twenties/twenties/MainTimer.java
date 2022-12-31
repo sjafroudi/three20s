@@ -7,7 +7,4 @@ public class MainTimer extends Timer {
     public MainTimer(Integer start, Duration dur, Timeline tl) {
         super(start, dur, tl);
     }
-
-
-
 }
