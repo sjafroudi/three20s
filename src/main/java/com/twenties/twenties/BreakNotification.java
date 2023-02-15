@@ -30,20 +30,10 @@ public class BreakNotification extends Stage {
         Timeline tl = new Timeline();
         BreakTimer breakTimer = new BreakTimer(3,dur,tl, btn, breakStage);
 
-
-//        Label label = breakTimer.getLabel();
-//        breakTimer.styleLabel();
-//        StringBinding stringBinding = breakTimer.getFormattedTime();
-//        label.textProperty().bind(stringBinding);
-//        breakTimer.startBreakTimer();
-
         countdown = breakTimer.getTimeline();
         sb = breakTimer.getFormattedTime();
         countdownLabel = breakTimer.getLabel();
         countdownLabel.textProperty().bind(sb);
-//        breakTimer.setLabel();
-//        countdown.setCycleCount(Animation.INDEFINITE);
-//        countdown.play();
         countdown.play();
         stackPane.getChildren().add(countdownLabel);
         breakStage.setScene(scene);
